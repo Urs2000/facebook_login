@@ -2,14 +2,7 @@
 <html>
 <head>
     <title>Facebook Login Test</title>
-</head>
-<body>
-    <h1>Welcome to My Website</h1>
-    <fb:login-button 
-      scope="public_profile,email,user_friends"
-      onlogin="checkLoginState();">
-    </fb:login-button>
-
+    <!-- Facebook SDK Script -->
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script>
       window.fbAsyncInit = function() {
@@ -30,7 +23,16 @@
          js.src = "https://connect.facebook.net/en_US/sdk.js";
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <fb:login-button 
+      scope="public_profile,email,user_friends"
+      onlogin="checkLoginState();">
+    </fb:login-button>
 
+    <script>
       function checkLoginState() {
         FB.getLoginStatus(function(response) {
           statusChangeCallback(response);
