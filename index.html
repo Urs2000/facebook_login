@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Facebook Login Test</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <fb:login-button 
+      scope="public_profile,email,user_friends"
+      onlogin="checkLoginState();">
+    </fb:login-button>
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '401369475625006',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v10.0' 
+        });
+        
+        FB.AppEvents.logPageView();   
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+
+      function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
+      }
+
+      function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+          // Logged into your webpage and Facebook.
+          fetchFriends();
+        } else {
+          // The person is not logged into your webpage or we are unable to tell.
+          console.log('Please log into this webpage.');
+        }
+      }
+
+      function fetchFriends() {
+        FB.api('/me/friends', function(response) {
+          console.log('Friends: ', response);
+          // Use the response to show the list of friends
+        });
+      }
+    </script>
+</body>
+</html>
